@@ -1,0 +1,11 @@
+# From https://www.osetc.com/en/how-to-install-and-configure-logrotate-on-alpine-linux.html and https://github.com/rclone/rclone/issues/2259
+/config/rclone/log/restic-rclone.log {
+  su restic restic
+  maxsize 5M
+  rotate 7
+  copytruncate
+  daily
+  compress
+  missingok
+  notifempty
+}

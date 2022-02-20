@@ -1,0 +1,34 @@
+#!/usr/bin/with-contenv bash
+# FROM https://github.com/linuxserver/docker-baseimage-alpine/blob/master/root/etc/cont-init.d/10-adduser
+
+PUID=${PUID:-911}
+PGID=${PGID:-911}
+
+groupmod -o -g "$PGID" restic
+usermod -o -u "$PUID" restic
+
+echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+User uid:    $(id -u restic)
+User gid:    $(id -g restic)
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+"
+
+time32="$(date +%Y)"
+
+if [[ "${time32}" == "1970" || "${time32}" == "1969" ]] && [ "$(uname -m)" == "armv7l" ]; then
+  echo '
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+Your DockerHost is running an outdated version of libseccomp
+
+To fix this, please visit https://docs.linuxserver.io/faq#libseccomp
+
+Apps will not behave correctly without this
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+'
+sleep infinity
+fi
+
+chown -R restic:restic /config
+chmod -R 777 /config

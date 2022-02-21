@@ -15,7 +15,7 @@ echo "Starting backup of /data at $(date +"%Y-%m-%d %H:%M:%S %Z")"
 if [ "${NOTIFICATIONS:-false}" = true ]; then
     if [ -n "$APPRISE_BACKUP_ARGS" ]; then
         BACKUP=$(restic --verbose -r="${RESTIC_REPOSITORY}" backup ${RESTIC_BACKUP_ARGS:-} /data || (echo "Error backing up /data"; exit 1))
-        apprise ${APPRISE_BACKUP_ARGS:-} -t "${APPRISE_TITLE:-"Restic Backup"}" -b "$BACKUP" -vvv || (echo "Error sending notifications")
+        apprise ${APPRISE_BACKUP_ARGS:-} -t "${APPRISE_TITLE:-"Restic Backup"}" -b "$BACKUP" || (echo "Error sending notifications")
     else
         echo "NOTIFICATIONS is True, but APPRISE_BACKUP_ARGS is not set. Please check your configuration. Notifications will not work."
     fi
@@ -27,7 +27,7 @@ if [ -n "$RESTIC_FORGET_ARGS" ]; then
     if [ "${NOTIFICATIONS:-false}" = true ]; then
     if [ -n "$APPRISE_FORGET_ARGS" ]; then
         FORGET=$(restic forget ${RESTIC_FORGET_ARGS} || (echo "Forgetting old snapshots failed"; exit 1))
-        apprise ${APPRISE_FORGET_ARGS:-} -t "Purging older snapshots" -b "$FORGET" -vvv || (echo "Error sending forget notifications")
+        apprise ${APPRISE_FORGET_ARGS:-} -t "Purging older snapshots" -b "$FORGET" || (echo "Error sending forget notifications")
         echo "Successfully ran restic forget command"
     else
         echo "NOTIFICATIONS is True, but APPRISE_FORGET_ARGS is not set. Please check your configuration. Notifications will not work."

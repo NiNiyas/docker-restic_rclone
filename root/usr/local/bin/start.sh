@@ -54,12 +54,14 @@ mkdir -p /config/restic
 [ -f /config/rclone/log/restic-rclone.log ] || touch /config/rclone/log/restic-rclone.log
 
 if [ -n "$CRON" ]; then
-  echo -e "${CRON} /usr/local/bin/restic.sh >> /config/restic/restic-cron.log" 2>&1 > /var/spool/cron/crontabs/root
+  echo -e "${CRON} /usr/local/bin/restic.sh >> /config/restic/restic-cron.log\n" >> /var/spool/cron/crontabs/root
   /sbin/tini -s -- /usr/sbin/crond -b
 else
   echo CRON variable not set. Exiting...
   exit 1
 fi
+
+echo -e "0 0 * * * /usr/sbin/logrotate --force --verbose /etc/logrotate.conf\n"  >> /var/spool/cron/crontabs/root
 
 if [ -n "$RCLONE_REMOTE_NAME" ]; then
   if [ -n "$RCLONE_REMOTE_LOCATION" ]; then

@@ -54,7 +54,7 @@ mkdir -p /config/restic
 [ -f /config/rclone/log/restic-rclone.log ] || touch /config/rclone/log/restic-rclone.log
 
 if [ -n "$CRON" ]; then
-  echo -e "${CRON} /usr/local/bin/restic.sh >> /config/restic/restic-cron.log\n" >> /var/spool/cron/crontabs/root
+  echo -e "${CRON} /usr/local/bin/restic.sh >> /config/restic/restic-cron.log\n" 2>&1 > /var/spool/cron/crontabs/root
   /sbin/tini -s -- /usr/sbin/crond -b
 else
   echo CRON variable not set. Exiting...

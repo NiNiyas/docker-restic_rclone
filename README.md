@@ -1,5 +1,6 @@
 # Docker Restic_Rclone
-Forked from [jasonccox/restic-rclone-docker](https://github.com/jasonccox/restic-rclone-docker)
+Forked from [jasonccox/restic-rclone-docker](https://github.com/jasonccox/restic-rclone-docker) \
+Available on Docker hub as [niniyas/restic-rclone](https://hub.docker.com/r/niniyas/restic-rclone).
 
 ## Features
 - Support for PUID and PGID variables.
@@ -7,18 +8,17 @@ Forked from [jasonccox/restic-rclone-docker](https://github.com/jasonccox/restic
 - Uses S6 overlay.
 - Timezone support.
 - Healthchecks.io support.
-- Image size of ~170mb.
 - Customizable cron interval.
 - Automatically rotates log for rclone and restic.
 - Notification support through [apprise](https://github.com/caronc/apprise) which can send notifications to almost every service.
 
 ## Supported Architectures
 
-| Architecture | Tag         |
-| -----------  | ----------- |
-| x86-64       | amd64       |
-| arm64        | arm64       |
-| armhf        | armhf       |
+| Architecture | Tag   |
+|--------------|-------|
+| x86-64       | amd64 |
+| arm64        | arm64 |
+| armhf        | armhf |
 
 # Usage
 ## docker run

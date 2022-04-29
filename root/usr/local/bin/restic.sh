@@ -40,7 +40,7 @@ fi
 
 if [ -n "$HEALTHCHECK" ]; then
     echo "Performing healthcheck"
-    wget ${HEALTHCHECK} -T 10 -t 5 -O /dev/null || (echo "Error occurred when trying to perform healthcheck."; exit 1)
+    wget --header="${HEALTHCHECKS_HEADER_KEY}: ${HEALTHCHECKS_HEADER_VALUE}" ${HEALTHCHECK} -T 10 -t 5 -O /dev/null || (echo "Error occurred when trying to perform healthcheck."; exit 1)
     echo "Successfully performed healthcheck"
 fi
 

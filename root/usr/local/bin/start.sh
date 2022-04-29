@@ -44,6 +44,14 @@ fi
 
 if [ -n "$HEALTHCHECK" ]; then
     echo -e "HEALTHCHECK: ${HEALTHCHECK}"
+    if [ "${HEALTHCHECKS_HEADER_KEY:-}" ]; then
+      if [ -n "${HEALTHCHECKS_HEADER_VALUE}" ]; then
+        echo "HEALTHCHECKS_HEADER_KEY: ${HEALTHCHECKS_HEADER_KEY}"
+        echo "HEALTHCHECKS_HEADER_VALUE: ${HEALTHCHECKS_HEADER_VALUE}"
+    else
+        echo "HEALTHCHECKS_HEADER_KEY is True, but HEALTHCHECKS_HEADER_VALUE is not set. Please check your configuration. Healthcheck will not work."
+      fi
+    fi
 fi
 echo "---------------------------------------------------------------------------"
 # create necessary config dirs

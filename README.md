@@ -53,8 +53,10 @@ services:
       - RCLONE_REMOTE_NAME=RemoteName
       - RCLONE_REMOTE_LOCATION=Backups
       - RESTIC_FORGET_ARGS=--keep-last 2 --prune
+      - HEALTHCHECKS_HEADER_KEY=Proxy-Authorization
       - RESTIC_REPOSITORY=rest:http://0.0.0.0:8080/
       - RCLONE_CONFIG_LOCATION=/config/rclone/rclone.conf
+      - HEALTHCHECKS_HEADER_VALUE=Basic asjbfaofbasdofnasfoianhsd
       - HEALTHCHECK=https://healthchecks.io/ping/abcde-fghijk-lmnopqrstuvwxyz
       - RESTIC_BACKUP_ARGS=--exclude /data/.cache --exclude /data/node_modules
       - APPRISE_BACKUP_ARGS=discord://1234567891000/hWPpxwdshdfhdfh3uf9NqBdasdasdasddsfhgdfh5iHWxZDxtUes0Mm/?format=markdown&avatar=No
@@ -102,6 +104,10 @@ services:
   - Default is `Restic Backup`. Optional.
 - HEALTHCHECK
   - healthchecks.io url. See [here](https://healthchecks.io/) for more info. Optional. No defaults.
+- HEALTHCHECKS_HEADER_KEY
+  - Header key to be used when performing healthchecks. Optional. No defaults.
+- HEALTHCHECKS_HEADER_VALUE
+  - Header value to be used when performing healthchecks. Optional. No defaults.
 
 ## Volume Mounts
 - /config

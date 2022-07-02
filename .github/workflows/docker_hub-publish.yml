@@ -81,69 +81,34 @@ jobs:
             ARCH=arm
             RCLONE_ARCH=arm-v7
 
-      - name: Discord Success Notifications
-        uses: niniyas/discord-webhook-notify@master
+      - name: ntfy success notifications
+        uses: niniyas/ntfy-action@master
         if: success()
         with:
-          severity: info
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          details: "Workflow run has been completed successfully!\n **View Here**: [Docker Hub](https://hub.docker.com/r/niniyas/restic-rclone)"
+          url: ${{ secrets.NTFY_URL }}
+          topic: ${{ secrets.NTFY_TOPIC }}
+          tags: github,action,+1,partying_face
+          priority: 4
+          details: 'Workflow has been completed successfully!'
+          headers: '${{ secrets.NTFY_HEADERS }}'
 
-      - name: Discord Failure Notifications
-        uses: niniyas/discord-webhook-notify@master
+      - name: ntfy failed notifications
+        uses: niniyas/ntfy-action@master
         if: failure()
         with:
-         severity: error
-         details: "Workflow run has failed!"
-         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          url: ${{ secrets.NTFY_URL }}
+          topic: ${{ secrets.NTFY_TOPIC }}
+          tags: github,action,failed,rotating_light
+          priority: 5
+          details: 'Workflow has failed!'
+          headers: '${{ secrets.NTFY_HEADERS }}'
 
-      - name: Discord Cancelled Notifications
-        uses: niniyas/discord-webhook-notify@master
+      - name: ntfy cancelled notifications
+        uses: niniyas/ntfy-action@master
         if: cancelled()
         with:
-         severity: warn
-         details: "Workflow run has been cancelled!"
-         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
-      - name: Pushover Success Notifications
-        uses: niniyas/pushover-notify@master
-        if: success()
-        with:
-          pushoverUser: ${{ secrets.PUSHOVER_USER }}
-          pushoverApp: ${{ secrets.PUSHOVER_APP }}
-          details: "Workflow run has been completed successfully!\n <b>View Here</b>: <a href='https://hub.docker.com/r/niniyas/restic-rclone'>Docker Hub</a>"
-
-      - name: Pushover Failure Notifications
-        uses: niniyas/pushover-notify@master
-        if: failure()
-        with:
-          pushoverUser: ${{ secrets.PUSHOVER_USER }}
-          pushoverApp: ${{ secrets.PUSHOVER_APP }}
-          priority: 1
-          details: "Workflow run has failed!"
-
-      - name: Pushover Cancelled Notifications
-        uses: niniyas/pushover-notify@master
-        if: cancelled()
-        with:
-          pushoverUser: ${{ secrets.PUSHOVER_USER }}
-          pushoverApp: ${{ secrets.PUSHOVER_APP }}
-          details: "Workflow run has been cancelled!"
-
-      - name: Slack Notifications
-        if: ${{ always() }}
-        uses: ahmadnassri/action-slack-workflow-notifications@v1
-        with:
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-
-      - name: Telegram Notifications
-        uses: KaMeHb-UA/telegram-ci-notify-action@v5
-        if: ${{ always() }}
-        with:
-          status: ${{ steps.docker_build.outcome }}
-          bot-token: ${{ secrets.TG_BOT_TOKEN }}
-          chat-id: ${{ secrets.TG_CHAT_ID }}
-          container-name: niniyas/restic-rclone
-          container-link: https://hub.docker.com/r/niniyas/restic-rclone
-          skip-is-fail: true
-          default-branch: $default-branch
+          url: ${{ secrets.NTFY_URL }}
+          topic: ${{ secrets.NTFY_TOPIC }}
+          tags: github,action,cancelled,skull
+          details: 'Workflow has been cancelled!'
+          headers: '${{ secrets.NTFY_HEADERS }}'

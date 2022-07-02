@@ -62,7 +62,7 @@ services:
       - APPRISE_BACKUP_ARGS=discord://1234567891000/hWPpxwdshdfhdfh3uf9NqBdasdasdasddsfhgdfh5iHWxZDxtUes0Mm/?format=markdown&avatar=No
       - APPRISE_FORGET_ARGS=discord://1234567891000/hWPpxwdshdfhdfh3uf9NqBdasdasdasddsfhgdfh5iHWxZDxtUes0Mm/?format=markdown&avatar=No
     volumes:
-      - .resticconfig:/config # Optional. Required to see the logs.
+      - .logs:/logs # Optional. Required to see the logs.
       - /home/odin/:/data # Required. This is the backup directory.
       - /home/odin/.config/rclone/rclone.conf:/config/rclone/rclone.conf # Only if you are using rclone.
 ```
@@ -110,13 +110,13 @@ services:
   - Header value to be used when performing healthchecks. Optional. No defaults.
 
 ## Volume Mounts
-- /config
+- /logs
   - rclone and restic logs.
 - /data
   - Backup directory
 
 ## Files
-- /config/rclone/log/restic-rclone.log
+- /logs/rclone/restic-rclone.log
   - rclone log.
-- /config/restic/restic-cron.log
+- /logs/restic/restic-cron.log
   - restic log.

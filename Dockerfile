@@ -38,7 +38,7 @@ RUN chmod +x /tmp/s6-overlay-${OVERLAY_ARCH}-installer && /tmp/s6-overlay-${OVER
 
 RUN addgroup -S restic && adduser -S restic -G restic
 
-VOLUME [ "/config", "/data" ]
+VOLUME [ "/config", "/data", "/logs" ]
 
 LABEL GITHUB=https://github.com/NiNiyas/docker-restic_rclone
 LABEL MAINTAINER=NiNiyas

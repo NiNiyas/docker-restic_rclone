@@ -55,14 +55,14 @@ if [ -n "$HEALTHCHECK" ]; then
 fi
 echo "---------------------------------------------------------------------------"
 # create necessary config dirs
-mkdir -p /config/rclone/log
-mkdir -p /config/restic
+mkdir -p /logs/rclone
+mkdir -p /logs/restic
 
 # create an empty restic-rclone.log file
-[ -f /config/rclone/log/restic-rclone.log ] || touch /config/rclone/log/restic-rclone.log
+[ -f /logs/rclone/restic-rclone.log ] || touch /logs/rclone/restic-rclone.log
 
 if [ -n "$CRON" ]; then
-  echo -e "${CRON} /usr/local/bin/restic.sh >> /config/restic/restic-cron.log\n" 2>&1 > /var/spool/cron/crontabs/root
+  echo -e "${CRON} /usr/local/bin/restic.sh >> /logs/restic/restic.log\n" 2>&1 > /var/spool/cron/crontabs/root
   /sbin/tini -s -- /usr/sbin/crond -b
 else
   echo CRON variable not set. Exiting...
@@ -74,7 +74,8 @@ echo -e "0 0 * * * /usr/sbin/logrotate --force --verbose /etc/logrotate.conf\n" 
 if [ -n "$RCLONE_REMOTE_NAME" ]; then
   if [ -n "$RCLONE_REMOTE_LOCATION" ]; then
     echo "Starting rclone restic serve on :8080"
-    /sbin/tini -s -- rclone serve restic ${RCLONE_REMOTE_NAME}:${RCLONE_REMOTE_LOCATION} --addr 0.0.0.0:8080 --log-file /config/rclone/log/restic-rclone.log --config=${RCLONE_CONFIG_LOCATION:-/config/rclone/rclone.conf} \
+    # shellcheck disable=SC2086
+    /sbin/tini -s -- rclone serve restic ${RCLONE_REMOTE_NAME}:"${RCLONE_REMOTE_LOCATION}" --addr 0.0.0.0:8080 --log-file /logs/rclone/restic-rclone.log --config=${RCLONE_CONFIG_LOCATION:-/config/rclone/rclone.conf} \
     ${RCLONE_SERVE_ARGS:-}
   else
     echo "RCLONE_REMOTE_NAME is set, but RCLONE_REMOTE_LOCATION is not. Please check your configuration and restart."

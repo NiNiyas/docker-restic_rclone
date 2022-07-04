@@ -74,8 +74,7 @@ echo -e "0 0 * * * /usr/sbin/logrotate --force --verbose /etc/logrotate.conf\n" 
 if [ -n "$RCLONE_REMOTE_NAME" ]; then
   if [ -n "$RCLONE_REMOTE_LOCATION" ]; then
     echo "Starting rclone restic serve on :8080"
-    # shellcheck disable=SC2086
-    /sbin/tini -s -- rclone serve restic ${RCLONE_REMOTE_NAME}:"${RCLONE_REMOTE_LOCATION}" --addr 0.0.0.0:8080 --log-file /logs/rclone/restic-rclone.log --config=${RCLONE_CONFIG_LOCATION:-/config/rclone/rclone.conf} \
+    /sbin/tini -s -- rclone serve restic ${RCLONE_REMOTE_NAME}:${RCLONE_REMOTE_LOCATION} --addr 0.0.0.0:8080 --log-file /logs/rclone/restic-rclone.log --config=${RCLONE_CONFIG_LOCATION:-/config/rclone/rclone.conf} \
     ${RCLONE_SERVE_ARGS:-}
   else
     echo "RCLONE_REMOTE_NAME is set, but RCLONE_REMOTE_LOCATION is not. Please check your configuration and restart."

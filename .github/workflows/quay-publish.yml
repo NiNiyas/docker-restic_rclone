@@ -45,8 +45,8 @@ jobs:
           push: true
           provenance: false
           tags: |
-            ${{ secrets.DOCKER_USER }}/restic-rclone:amd64
-            ${{ secrets.DOCKER_USER }}/restic-rclone:amd64_commit-${{ steps.short-sha.outputs.sha }}
+            quay.io/${{ secrets.DOCKER_USER }}/restic-rclone:amd64
+            quay.io/${{ secrets.DOCKER_USER }}/restic-rclone:amd64_commit-${{ steps.short-sha.outputs.sha }}
           platforms: linux/amd64
           build-args: |
             OVERLAY_ARCH=amd64
@@ -60,8 +60,8 @@ jobs:
           push: true
           provenance: false
           tags: |
-            ${{ secrets.DOCKER_USER }}/restic-rclone:arm64
-            ${{ secrets.DOCKER_USER }}/restic-rclone:arm64_commit-${{ steps.short-sha.outputs.sha }}
+            quay.io/${{ secrets.DOCKER_USER }}/restic-rclone:arm64
+            quay.io/${{ secrets.DOCKER_USER }}/restic-rclone:arm64_commit-${{ steps.short-sha.outputs.sha }}
           platforms: linux/arm64
           build-args: |
             OVERLAY_ARCH=aarch64
@@ -75,8 +75,8 @@ jobs:
           push: true
           provenance: false
           tags: |
-            ${{ secrets.DOCKER_USER }}/restic-rclone:armhf
-            ${{ secrets.DOCKER_USER }}/restic-rclone:armhf_commit-${{ steps.short-sha.outputs.sha }}
+            quay.io/${{ secrets.DOCKER_USER }}/restic-rclone:armhf
+            quay.io/${{ secrets.DOCKER_USER }}/restic-rclone:armhf_commit-${{ steps.short-sha.outputs.sha }}
           platforms: linux/arm/v7
           build-args: |
             OVERLAY_ARCH=arm

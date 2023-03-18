@@ -1,8 +1,8 @@
 version: "3.9"
 services:
   restic:
-    container_name: Restic_Backup
-    image: ghcr.io/niniyas/restic-rclone:amd64 | arm64 | armhf
+    container_name: Restic
+    image: ghcr.io/niniyas/restic-rclone:latest
     environment:
       - PUID=1000
       - PGID=1000

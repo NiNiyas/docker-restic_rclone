@@ -1,6 +1,5 @@
 # Docker Restic_Rclone
-Forked from [jasonccox/restic-rclone-docker](https://github.com/jasonccox/restic-rclone-docker) \
-Available on Docker hub as [niniyas/restic-rclone](https://hub.docker.com/r/niniyas/restic-rclone).
+Based on [jasonccox/restic-rclone-docker](https://github.com/jasonccox/restic-rclone-docker)
 
 ## Features
 - Support for PUID and PGID variables.
@@ -14,6 +13,11 @@ Available on Docker hub as [niniyas/restic-rclone](https://hub.docker.com/r/nini
 
 ## Supported Architectures
 
+Simply pulling `ghcr.io/niniyas/restic-rclone:latest` should retrieve the correct image for your arch, but you can
+also pull specific arch images via tags.
+
+Also available on [quay](https://quay.io/niniyas/restic-rclone) `quay.io/niniyas/restic-rclone:latest`
+
 | Architecture | Tag   |
 |--------------|-------|
 | x86-64       | amd64 |
@@ -23,7 +27,7 @@ Available on Docker hub as [niniyas/restic-rclone](https://hub.docker.com/r/nini
 # Usage
 ## docker run
 ```
-docker run -d --name Restic_Backup -e PUID=1000 -e PGID=1000 -e CRON=0 2 * * * -e TZ=Europe/Brussels -e RESTIC_PASSWORD=supersecret -e RESTIC_REPOSITORY=rest:http://0.0.0.0:8080/ -v /path/to/host/config:/config -v /path/to/backup:/data ghcr.io/niniyas/restic-rclone:amd64 | arm64 | armhf
+docker run -d --name Restic -e PUID=1000 -e PGID=1000 -e CRON=0 2 * * * -e TZ=Europe/Brussels -e RESTIC_PASSWORD=supersecret -e RESTIC_REPOSITORY=rest:http://0.0.0.0:8080/ -v /path/to/host/config:/config -v /path/to/backup:/data ghcr.io/niniyas/restic-rclone:latest
 ```
 
 ## docker-compose (recommended)
@@ -31,7 +35,7 @@ docker run -d --name Restic_Backup -e PUID=1000 -e PGID=1000 -e CRON=0 2 * * * -
 version: "3.9"
 services:
   restic:
-    container_name: Restic_Backup
+    container_name: Restic
     #build:                                       #
     #  context: .                                 #
     #  dockerfile: Dockerfile | Dockerfile.armhf  # If you want to build for amd64 and arm64 | Builds for arhmf
@@ -39,7 +43,7 @@ services:
     #      ARCH=amd64                             # 
     #      OVERLAY_ARCH=amd64                     #
     #      RCLONE_ARCH=arm-v7                     # Only if you want to build for armv7
-    image: ghcr.io/niniyas/restic-rclone:amd64 | arm64 | armhf
+    image: ghcr.io/niniyas/restic-rclone:latest
     environment:
       - PUID=1000
       - PGID=1000

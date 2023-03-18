@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 ARG ARCH
-ARG RCLONE_VERSION=1.61.1
+ARG RCLONE_VERSION=1.62.2
 ARG RESTIC_VERSION=0.15.1
 ARG OVERLAY_VERSION=v2.2.0.3
 ARG OVERLAY_ARCH
@@ -27,6 +27,7 @@ RUN wget -O - $RESTIC_URL | bzip2 -d -c > /bin/restic && \
     apk --purge del git
 
 COPY /root /
+
 RUN chmod +x /usr/local/bin/start.sh && \
     chmod +x /usr/local/bin/restic.sh && \
     cp /opt/rclone /etc/logrotate.d/rclone && \
@@ -43,7 +44,7 @@ VOLUME [ "/config", "/data", "/logs" ]
 LABEL GITHUB=https://github.com/NiNiyas/docker-restic_rclone
 LABEL MAINTAINER=NiNiyas
 LABEL FORKED_FROM=https://github.com/jasonccox/restic-rclone-docker
-LABEL org.opencontainers.image.source https://github.com/NiNiyas/docker-restic_rclone
+LABEL org.opencontainers.image.source=https://github.com/NiNiyas/docker-restic_rclone
 
 CMD ["/sbin/tini", "-v", "--", "/usr/local/bin/start.sh"]
 ENTRYPOINT ["/init"]

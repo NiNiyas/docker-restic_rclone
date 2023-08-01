@@ -45,7 +45,7 @@ jobs:
           push: true
           provenance: false
           tags: |
-            ghcr.io/niniyas/restic-rclone:amd64
+            ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:amd64
             ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:amd64_commit-${{ steps.short-sha.outputs.sha }}
           platforms: linux/amd64
           build-args: |
@@ -60,7 +60,7 @@ jobs:
           push: true
           provenance: false
           tags: |
-            ghcr.io/niniyas/restic-rclone:arm64
+            ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:arm64
             ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:arm64_commit-${{ steps.short-sha.outputs.sha }}
           platforms: linux/arm64
           build-args: |
@@ -75,7 +75,7 @@ jobs:
           push: true
           provenance: false
           tags: |
-            ghcr.io/niniyas/restic-rclone:armhf
+            ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:armhf
             ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:armhf_commit-${{ steps.short-sha.outputs.sha }}
           platforms: linux/arm/v7
           build-args: |

@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 ARG ARCH
-ARG RCLONE_VERSION=1.63.1
+ARG RCLONE_VERSION=1.65.0
 ARG RESTIC_VERSION=0.16.0
 ARG OVERLAY_VERSION=v2.2.0.3
 ARG OVERLAY_ARCH
@@ -23,7 +23,7 @@ RUN wget -O - $RESTIC_URL | bzip2 -d -c > /bin/restic && \
     rm -rf rclone.zip rclone-* && \
     apk add --no-cache --update tzdata tini python3 git py-pip logrotate shadow bash wget && \
     pip3 install -U pip && \
-    pip3 install git+https://github.com/NiNiyas/apprise && \
+    pip3 install apprise && \
     apk --purge del git
 
 COPY /root /

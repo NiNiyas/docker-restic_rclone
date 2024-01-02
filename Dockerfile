@@ -21,9 +21,8 @@ RUN wget -O - $RESTIC_URL | bzip2 -d -c > /bin/restic && \
     mv rclone-*/rclone /bin/rclone && \
     chmod +x /bin/restic /bin/rclone && \
     rm -rf rclone.zip rclone-* && \
-    apk add --no-cache --update tzdata tini python3 git py-pip logrotate shadow bash wget && \
-    pip3 install -U pip && \
-    pip3 install apprise && \
+    apk add --no-cache --upgrade tzdata tini python3 py3-pip git logrotate shadow bash wget && \
+    pip install -U --no-cache-dir pip apprise --break-system-packages && \
     apk --purge del git
 
 COPY /root /

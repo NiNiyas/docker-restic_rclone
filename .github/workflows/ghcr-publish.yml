@@ -49,8 +49,8 @@ jobs:
             ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:amd64_commit-${{ steps.short-sha.outputs.sha }}
           platforms: linux/amd64
           build-args: |
-            OVERLAY_ARCH=amd64
-            ARCH=amd64
+            OVERLAY_ARCH=x86_64
+            RESTIC_ARCH=amd64
 
       - name: Build and push aarch64
         uses: docker/build-push-action@v5.1.0
@@ -65,29 +65,13 @@ jobs:
           platforms: linux/arm64
           build-args: |
             OVERLAY_ARCH=aarch64
-            ARCH=arm64
-
-      - name: Build and push armv7
-        uses: docker/build-push-action@v5.1.0
-        with:
-          context: ./
-          file: ./Dockerfile.armhf
-          push: true
-          provenance: false
-          tags: |
-            ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:armhf
-            ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:armhf_commit-${{ steps.short-sha.outputs.sha }}
-          platforms: linux/arm/v7
-          build-args: |
-            OVERLAY_ARCH=arm
-            ARCH=arm
-            RCLONE_ARCH=arm-v7
+            RESTIC_ARCH=arm64
 
       - name: Create and push manifest images
-        uses: Noelware/docker-manifest-action@master
+        uses: Noelware/docker-manifest-action@0.4.3
         with:
           inputs: ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:latest
-          images: ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:amd64,ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:arm64,ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:armhf
+          images: ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:amd64,ghcr.io/${{ secrets.GIT_USER }}/restic-rclone:arm64
           push: true
 
       - name: ntfy success notifications

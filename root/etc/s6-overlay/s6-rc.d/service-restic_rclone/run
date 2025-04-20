@@ -1,0 +1,5 @@
+#!/command/with-contenv bash
+
+umask "${UMASK}"
+
+exec s6-setuidgid restic /usr/local/bin/start.sh

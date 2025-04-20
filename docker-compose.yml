@@ -7,7 +7,6 @@ services:
       - PUID=1000
       - PGID=1000
       - CRON=0 2 * * *
-      - TINI_VERBOSITY=0
       - TZ=Europe/Brussels
       - NOTIFICATIONS=true
       - APPRISE_TITLE=Restic
@@ -16,15 +15,14 @@ services:
       - RCLONE_REMOTE_NAME=RemoteName
       - RCLONE_REMOTE_LOCATION=Backups
       - RESTIC_FORGET_ARGS=--keep-last 2 --prune
-      - HEALTHCHECKS_HEADER_KEY=Proxy-Authorization
       - RESTIC_REPOSITORY=rest:http://0.0.0.0:8080/
       - RCLONE_CONFIG_LOCATION=/config/rclone/rclone.conf
-      - HEALTHCHECKS_HEADER_VALUE=Basic asjbfaofbasdofnasfoianhsd
       - HEALTHCHECK=https://healthchecks.io/ping/abcde-fghijk-lmnopqrstuvwxyz
       - RESTIC_BACKUP_ARGS=--exclude /data/.cache --exclude /data/node_modules
+      - HEALTHCHECK_HEADERS=Authorization Basic 123456789|Another one 123456789
       - APPRISE_BACKUP_ARGS=discord://1234567891000/hWPpxwdshdfhdfh3uf9NqBdasdasdasddsfhgdfh5iHWxZDxtUes0Mm/?format=markdown&avatar=No
       - APPRISE_FORGET_ARGS=discord://1234567891000/hWPpxwdshdfhdfh3uf9NqBdasdasdasddsfhgdfh5iHWxZDxtUes0Mm/?format=markdown&avatar=No
     volumes:
       - .logs:/logs # Optional. Required to see the logs.
-      - /home/odin/:/data # Required. This is the backup directory.
-      - /home/odin/.config/rclone/rclone.conf:/config/rclone/rclone.conf # Only if you are using rclone.
+      - .data:/data # Required. This is the backup directory.
+      - .rclone/rclone.conf:/config/rclone/rclone.conf
